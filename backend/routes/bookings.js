@@ -1,9 +1,9 @@
 const router = require('express').Router();
-let Exercise = require('../models/exercise.model');
+let Booking = require('../models/booking.model');
 
 router.route('/').get((req, res) => {
-    Exercise.find()
-        .then(exercises => res.json(exercises))
+    Booking.find()
+        .then(bookings => res.json(bookings))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -15,37 +15,37 @@ router.route('/add').post((req, res) => {
     const prices = Number(req.body.prices);
     const date = Date.parse(req.body.date);
 
-    const newExercise = new Exercise({ username, description, type, quantity, prices, date });
+    const newBooking = new Booking({ username, description, type, quantity, prices, date });
 
-    newExercise.save()
-        .then(() => res.json('Exercise added!'))
+    newBooking.save()
+        .then(() => res.json('Booking added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/:id').get((req, res) => {
-    Exercise.findById(req.params.id)
-        .then(exercise => res.json(exercise))
+    Booking.findById(req.params.id)
+        .then(booking => res.json(booking))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/:id').delete((req, res) => {
-    Exercise.findByIdAndDelete(req.params.id)
-        .then(exercise => res.json('Exercise deleted'))
+    Booking.findByIdAndDelete(req.params.id)
+        .then(booking => res.json('Booking deleted'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/update/:id').post((req, res) => {
-    Exercise.findById(req.params.id)
-        .then(exercise => {
-            exercise.username = req.body.username;
-            exercise.description = req.body.description;
-            exercise.type = Number(req.body.type);
-            exercise.quantity = Number(req.body.quantity);
-            exercise.prices = Number(req.body.prices);
-            exercise.date = Date.parse(req.body.date);
+    Booking.findById(req.params.id)
+        .then(booking => {
+            booking.username = req.body.username;
+            booking.description = req.body.description;
+            booking.type = Number(req.body.type);
+            booking.quantity = Number(req.body.quantity);
+            booking.prices = Number(req.body.prices);
+            booking.date = Date.parse(req.body.date);
 
-            exercise.save()
-                .then(() => res.json('Exercise updated !'))
+            booking.save()
+                .then(() => res.json('Booking updated !'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
