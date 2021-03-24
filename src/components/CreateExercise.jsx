@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class CreateExercise extends Component {
 
-    constructor(props){
+    constructor(props) {
         super();
         this.state = {
             username: "",
@@ -24,8 +24,8 @@ class CreateExercise extends Component {
     componentDidMount() {
         axios.get('http://localhost:5000/users/')
             .then(response => {
-                if(response.data.length > 0) {
-                    this.setState({ 
+                if (response.data.length > 0) {
+                    this.setState({
                         users: response.data.map(user => user.username),
                         username: response.data[0].username
                     });
@@ -34,16 +34,16 @@ class CreateExercise extends Component {
     }
 
     onChangeUsername(e) {
-        this.setState({ username: e.target.value})
+        this.setState({ username: e.target.value })
     }
     onChangeDescription(e) {
-        this.setState({ description: e.target.value})
+        this.setState({ description: e.target.value })
     }
     onChangeDuration(e) {
-        this.setState({ duration: e.target.value})
+        this.setState({ duration: e.target.value })
     }
     onChangeDate(date) {
-        this.setState({ date: date})
+        this.setState({ date: date })
     }
     onSubmit(e) {
         e.preventDefault();
@@ -61,11 +61,11 @@ class CreateExercise extends Component {
 
         window.location = "/";
     }
-    
-    render() { 
-        return ( 
+
+    render() {
+        return (
             <div className="container">
-                <h3>Create New Exercise Log</h3>
+                <h3>Create New Booking</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username: </label>
@@ -75,7 +75,7 @@ class CreateExercise extends Component {
                             value={this.state.username}
                             onChange={this.onChangeUsername} >
                             {
-                                this.state.users.map(function(user) {
+                                this.state.users.map(function (user) {
                                     return <option key={user} value={user}>{user}</option>;
                                 })
                             }
@@ -113,8 +113,8 @@ class CreateExercise extends Component {
                     </div>
                 </form>
             </div>
-         );
+        );
     }
 }
- 
+
 export default CreateExercise;

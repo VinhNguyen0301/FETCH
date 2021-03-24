@@ -7,9 +7,9 @@ const Exercise = props => (
         <td>{props.exercise.username}</td>
         <td>{props.exercise.description}</td>
         <td>{props.exercise.duration}</td>
-        <td>{props.exercise.date.substring(0,10)}</td>
+        <td>{props.exercise.date.substring(0, 10)}</td>
         <td>
-            <button className="btn btn-secondary"><Link to={"/edit/"+props.exercise._id} style={{color:"white"}}>Edit</Link></button> | <button className="btn btn-danger" onClick={() => {props.deleteExercise(props.exercise._id) }}>Delete</button>
+            <button className="btn btn-secondary"><Link to={"/edit/" + props.exercise._id} style={{ color: "white" }}>Edit</Link></button> | <button className="btn btn-danger" onClick={() => { props.deleteExercise(props.exercise._id) }}>Delete</button>
         </td>
     </tr>
 )
@@ -33,10 +33,10 @@ class ExercisesList extends Component {
     }
 
     deleteExercise(id) {
-        axios.delete('http://localhost:5000/exercises/' +id)
+        axios.delete('http://localhost:5000/exercises/' + id)
             .then(res => console.log(res.data));
 
-        this.setState({ exercises: this.state.exercises.filter(el => el._id !== id)})
+        this.setState({ exercises: this.state.exercises.filter(el => el._id !== id) })
     }
 
     exercisesList() {
@@ -45,10 +45,10 @@ class ExercisesList extends Component {
         })
     }
 
-    render() { 
-        return ( 
+    render() {
+        return (
             <div className="container">
-                <h3>Logged Exercises</h3>
+                <h3>Manage Booking</h3>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
@@ -64,8 +64,8 @@ class ExercisesList extends Component {
                     </tbody>
                 </table>
             </div>
-         );
+        );
     }
 }
- 
+
 export default ExercisesList;
