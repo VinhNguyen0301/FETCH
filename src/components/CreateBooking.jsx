@@ -3,7 +3,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-class EditExercise extends Component {
+class CreateBooking extends Component {
 
     constructor(props) {
         super();
@@ -26,26 +26,12 @@ class EditExercise extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/bookings/' + this.props.match.params.id)
-            .then(res => {
-                this.setState({
-                    username: res.data.username,
-                    description: res.data.description,
-                    type: res.data.type,
-                    quantity: res.data.quantity,
-                    prices: res.data.prices,
-                    date: new Date(res.data.date),
-                })
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-
         axios.get('http://localhost:5000/users/')
             .then(response => {
                 if (response.data.length > 0) {
                     this.setState({
-                        users: response.data.map(user => user.username)
+                        users: response.data.map(user => user.username),
+                        username: response.data[0].username
                     });
                 }
             })
@@ -71,7 +57,7 @@ class EditExercise extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        const exercise = {
+        const booking = {
             username: this.state.username,
             description: this.state.description,
             type: this.state.type,
@@ -80,9 +66,9 @@ class EditExercise extends Component {
             date: this.state.date
         }
 
-        console.log(exercise);
+        console.log(booking);
 
-        axios.post('http://localhost:5000/bookings/update/' + this.props.match.params.id, exercise)
+        axios.post('http://localhost:5000/bookings/add', booking)
             .then(res => console.log(res.data));
 
         window.location = "/";
@@ -91,11 +77,11 @@ class EditExercise extends Component {
     render() {
         return (
             <div className="container">
-                <h3>Edit Booking </h3>
+                <h3>Create New Booking</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username: </label>
-                        <select
+                        <select ref="userInput"
                             required
                             className="form-control"
                             value={this.state.username}
@@ -153,7 +139,7 @@ class EditExercise extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+                        <input type="submit" value="Create Booking Log" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
@@ -161,4 +147,4 @@ class EditExercise extends Component {
     }
 }
 
-export default EditExercise;
+export default CreateBooking;

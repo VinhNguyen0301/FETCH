@@ -3,7 +3,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-class CreateExercise extends Component {
+class EditBooking extends Component {
 
     constructor(props) {
         super();
@@ -26,12 +26,26 @@ class CreateExercise extends Component {
     }
 
     componentDidMount() {
+        axios.get('http://localhost:5000/bookings/' + this.props.match.params.id)
+            .then(res => {
+                this.setState({
+                    username: res.data.username,
+                    description: res.data.description,
+                    type: res.data.type,
+                    quantity: res.data.quantity,
+                    prices: res.data.prices,
+                    date: new Date(res.data.date),
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
         axios.get('http://localhost:5000/users/')
             .then(response => {
                 if (response.data.length > 0) {
                     this.setState({
-                        users: response.data.map(user => user.username),
-                        username: response.data[0].username
+                        users: response.data.map(user => user.username)
                     });
                 }
             })
@@ -57,7 +71,7 @@ class CreateExercise extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        const exercise = {
+        const booking = {
             username: this.state.username,
             description: this.state.description,
             type: this.state.type,
@@ -66,9 +80,9 @@ class CreateExercise extends Component {
             date: this.state.date
         }
 
-        console.log(exercise);
+        console.log(booking);
 
-        axios.post('http://localhost:5000/bookings/add', exercise)
+        axios.post('http://localhost:5000/bookings/update/' + this.props.match.params.id, booking)
             .then(res => console.log(res.data));
 
         window.location = "/";
@@ -77,11 +91,11 @@ class CreateExercise extends Component {
     render() {
         return (
             <div className="container">
-                <h3>Create New Booking</h3>
+                <h3>Edit Booking </h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username: </label>
-                        <select ref="userInput"
+                        <select
                             required
                             className="form-control"
                             value={this.state.username}
@@ -139,7 +153,7 @@ class CreateExercise extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+                        <input type="submit" value="Edit Booking Log" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
@@ -147,4 +161,4 @@ class CreateExercise extends Component {
     }
 }
 
-export default CreateExercise;
+export default EditBooking;
