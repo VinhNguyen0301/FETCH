@@ -9,11 +9,17 @@ border-radius: 10px;
 float: right;
 margin-top: 10px;
 }
+.nav-position {
+     position: absolute;
+    right: 0;
+    margin-right: 20px !important;
+}
+
 .button {
 background-color: orange;
-margin: 20px;
+margin-top: 27px;
 height: 40px;
-width: 300px;
+width: 250px;
 border: 2px solid orange;
 border-radius: 5px;
 }

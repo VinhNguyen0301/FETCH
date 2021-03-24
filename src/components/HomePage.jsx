@@ -3,6 +3,8 @@ import { Row, Col, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import hotel1 from "../hotel1.jpeg";
+import DatePicker from "react-datepicker";
+
 function HomePage() {
     const [startDate, setStartDate] = useState(new Date());
     const number = [1, 2, 3, 4, 5];
@@ -27,15 +29,47 @@ function HomePage() {
             </Row>
         </div>
     ));
+
+    const onChangeDate = (date) => {
+        setStartDate(date);
+    }
+
     return (
         <div className="App">
             <div className="background-navbar">
-                <div className="position-element">
-                    <input className="date-picker" type="text" />
-                    <input className="date-picker" type="text" />
-                    <button className="button">List all available room</button>
-                </div>
+
+                <Container>
+                    <Row className="nav-position">
+                        <Col ></Col>
+                        <Col>
+                            <div className="form-group column">
+                                <label>CHECK IN: </label>
+                                <div>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={onChangeDate}
+                                    />
+                                </div>
+                            </div>
+                        </Col>
+                        <Col >
+                            <div className="form-group column" >
+                                <label>CHECK OUT: </label>
+                                <div>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={onChangeDate}
+                                    />
+                                </div>
+                            </div>
+                        </Col>
+                        <Col >
+                            <button className="button column">List all available room</button>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
+
             {listItems}
         </div>
     );
