@@ -6,7 +6,9 @@ const Exercise = props => (
     <tr>
         <td>{props.exercise.username}</td>
         <td>{props.exercise.description}</td>
-        <td>{props.exercise.duration}</td>
+        <td>{props.exercise.type}</td>
+        <td>{props.exercise.quantity}</td>
+        <td>{props.exercise.prices}</td>
         <td>{props.exercise.date.substring(0, 10)}</td>
         <td>
             <button className="btn btn-secondary"><Link to={"/edit/" + props.exercise._id} style={{ color: "white" }}>Edit</Link></button> | <button className="btn btn-danger" onClick={() => { props.deleteExercise(props.exercise._id) }}>Delete</button>
@@ -54,7 +56,9 @@ class ExercisesList extends Component {
                         <tr>
                             <th>Username</th>
                             <th>Description</th>
-                            <th>Duration</th>
+                            <th>Type</th>
+                            <th>Quantity</th>
+                            <th>Prices</th>
                             <th>Date</th>
                             <th>Action</th>
                         </tr>

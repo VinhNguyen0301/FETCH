@@ -10,13 +10,17 @@ class CreateExercise extends Component {
         this.state = {
             username: "",
             description: "",
-            duration: 0,
+            type: 0,
+            quantity: 0,
+            prices: 0,
             date: new Date(),
             users: []
         }
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.onChangeDuration = this.onChangeDuration.bind(this);
+        this.onChangeType = this.onChangeType.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.onChangePrices = this.onChangePrices.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -39,8 +43,14 @@ class CreateExercise extends Component {
     onChangeDescription(e) {
         this.setState({ description: e.target.value })
     }
-    onChangeDuration(e) {
-        this.setState({ duration: e.target.value })
+    onChangeType(e) {
+        this.setState({ type: e.target.value })
+    }
+    onChangeQuantity(e) {
+        this.setState({ quantity: e.target.value })
+    }
+    onChangePrices(e) {
+        this.setState({ prices: e.target.value })
     }
     onChangeDate(date) {
         this.setState({ date: date })
@@ -50,7 +60,9 @@ class CreateExercise extends Component {
         const exercise = {
             username: this.state.username,
             description: this.state.description,
-            duration: this.state.duration,
+            type: this.state.type,
+            quantity: this.state.quantity,
+            prices: this.state.prices,
             date: this.state.date
         }
 
@@ -91,12 +103,30 @@ class CreateExercise extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Duration(in minutes): </label>
+                        <label>Type(Type of bedroom): </label>
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.duration}
-                            onChange={this.onChangeDuration}
+                            value={this.state.type}
+                            onChange={this.onChangeType}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Quantity: </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.quantity}
+                            onChange={this.onChangeQuantity}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Prices: </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.prices}
+                            onChange={this.onChangePrices}
                         />
                     </div>
                     <div className="form-group">

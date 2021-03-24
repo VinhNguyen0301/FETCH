@@ -5,40 +5,46 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class EditExercise extends Component {
 
-    constructor(props){
+    constructor(props) {
         super();
         this.state = {
             username: "",
             description: "",
-            duration: 0,
+            type: 0,
+            quantity: 0,
+            prices: 0,
             date: new Date(),
             users: []
         }
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.onChangeDuration = this.onChangeDuration.bind(this);
+        this.onChangeType = this.onChangeType.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.onChangePrices = this.onChangePrices.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/exercises/'+this.props.match.params.id)
+        axios.get('http://localhost:5000/exercises/' + this.props.match.params.id)
             .then(res => {
                 this.setState({
                     username: res.data.username,
                     description: res.data.description,
-                    duration: res.data.duration,
+                    type: res.data.type,
+                    quantity: res.data.quantity,
+                    prices: res.data.prices,
                     date: new Date(res.data.date),
                 })
             })
-            .catch(function (error){
+            .catch(function (error) {
                 console.log(error);
             })
 
         axios.get('http://localhost:5000/users/')
             .then(response => {
-                if(response.data.length > 0) {
-                    this.setState({ 
+                if (response.data.length > 0) {
+                    this.setState({
                         users: response.data.map(user => user.username)
                     });
                 }
@@ -46,48 +52,56 @@ class EditExercise extends Component {
     }
 
     onChangeUsername(e) {
-        this.setState({ username: e.target.value})
+        this.setState({ username: e.target.value })
     }
     onChangeDescription(e) {
-        this.setState({ description: e.target.value})
+        this.setState({ description: e.target.value })
     }
-    onChangeDuration(e) {
-        this.setState({ duration: e.target.value})
+    onChangeType(e) {
+        this.setState({ type: e.target.value })
+    }
+    onChangeQuantity(e) {
+        this.setState({ quantity: e.target.value })
+    }
+    onChangePrices(e) {
+        this.setState({ prices: e.target.value })
     }
     onChangeDate(date) {
-        this.setState({ date: date})
+        this.setState({ date: date })
     }
     onSubmit(e) {
         e.preventDefault();
         const exercise = {
             username: this.state.username,
             description: this.state.description,
-            duration: this.state.duration,
+            type: this.state.type,
+            quantity: this.state.quantity,
+            prices: this.state.prices,
             date: this.state.date
         }
 
         console.log(exercise);
 
-        axios.post('http://localhost:5000/exercises/update/'+this.props.match.params.id, exercise)
+        axios.post('http://localhost:5000/exercises/update/' + this.props.match.params.id, exercise)
             .then(res => console.log(res.data));
 
         window.location = "/";
     }
-    
-    render() { 
-        return ( 
+
+    render() {
+        return (
             <div className="container">
-                <h3>Edit Exercise Log</h3>
+                <h3>Edit Booking </h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Username: </label>
-                        <select 
+                        <select
                             required
                             className="form-control"
                             value={this.state.username}
                             onChange={this.onChangeUsername} >
                             {
-                                this.state.users.map(function(user) {
+                                this.state.users.map(function (user) {
                                     return <option key={user} value={user}>{user}</option>;
                                 })
                             }
@@ -103,12 +117,30 @@ class EditExercise extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Duration(in minutes): </label>
+                        <label>Type(Type of bedroom): </label>
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.duration}
-                            onChange={this.onChangeDuration}
+                            value={this.state.type}
+                            onChange={this.onChangeType}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Quantity: </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.quantity}
+                            onChange={this.onChangeQuantity}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Prices: </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={this.state.prices}
+                            onChange={this.onChangePrices}
                         />
                     </div>
                     <div className="form-group">
@@ -125,8 +157,8 @@ class EditExercise extends Component {
                     </div>
                 </form>
             </div>
-         );
+        );
     }
 }
- 
+
 export default EditExercise;
