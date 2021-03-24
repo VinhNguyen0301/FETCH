@@ -8,7 +8,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse">
                 <ul className="navbar-nav">
                     <li className="navbar-item">
-                        <Link to="/" className="nav-link">Booking List</Link>
+                        <Link to="/booking-list" className="nav-link">Booking List</Link>
                     </li>
                     <li className="navbar-item">
                         <Link to="/create" className="nav-link">Create Booking</Link>
